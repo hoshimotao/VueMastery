@@ -17,33 +17,40 @@
       </div>
 
 
-      <div class="product-info">
-        <h1>{{ product }}</h1>
-        <p v-if="inventory > 100"> In Stock </p>
-        <p v-else-if="inventory<=10 && inventory > 0"> Almost Sold Out </p>
-        <!-- <p v-else> Out Of Stock </p> -->
-        <p :class="{crossOut: !inStock }"> In Stock</p>
 
+      <!-- Product Title and Stock -->
+
+      <div class="product-info">
+
+
+
+
+
+
+        <p> {{ sale }} </p>
+
+        <h1>{{ title }}</h1>
+
+
+        <p v-if="inStock"> In Stock </p>
+        <p v-else :class="{outOfStock: !inStock }"> Out of Stock </p>
         <ul>
           <li v-for="detail in details"> {{ detail }} </li>
         </ul>
 
-        <div v-for="variant in variants" 
-            :key="variant.variantId"
-            class="color-box cursorHover"
-            :style="{ backgroundColor: variant.variantColor }"
-            @mouseover="updateProduct(variant.variantImage)" >
 
 
 
-         
-          <!-- <div v-for="size in sizes" :key="size.sizeId"> 
-                <ul> 
-                  <li>
-                    {{ size.size }} 
-                  </li>
-                </ul>
-              </div> -->
+
+
+        <!-- Color Choice Boxes -->
+
+        <div v-for="(variant, index) in variants" :key="variant.variantId" class="color-box cursorHover"
+          :style="{ backgroundColor: variant.variantColor }" @mouseover="updateProduct(index)">
+
+
+
+
         </div>
 
 
@@ -51,9 +58,7 @@
         <!-- BUTTON + LISTENER -->
 
         <button @click="removeFromCart" style="background-color: red;"> Remove </button>
-        <button @click="addToCart" 
-                :disabled="!inStock"
-                :class="{disabledButton: !inStock }"> Add to Cart </button>
+        <button @click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock }"> Add to Cart </button>
 
         <div class="cart">
           <p> Cart({{cart}}) </p>

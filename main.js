@@ -1,24 +1,25 @@
 var app = new Vue({
     el: '#app',
     data: {
+        brand: 'Vue Mastery',
         product: 'Socks',
         description: 'Green Socks',
-        image: './assets/vmSocks-green-onWhite.jpg',
-        image_link: ('https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg'),
-        inStock: true,
+        selectedVariant: 0,
+        image_link: ('https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg'),    
         inventory: 90,
-        onSale: true,
         details: ["80% cotton", "20% polyester", "Gender-Neutral"],
         variants: [
             {
                 variantId: 2234,
                 variantColor: "green",
-                variantImage: './assets/vmSocks-green-onWhite.jpg'
+                variantImage: './assets/vmSocks-green-onWhite.jpg',
+                variantQuantity: 10
             },
             {
                 variantId: 2235,
                 variantColor: "blue",
-                variantImage: './assets/vmSocks-blue-onWhite.jpg'
+                variantImage: './assets/vmSocks-blue-onWhite.jpg',
+                variantQuantity: 0
 
             }
         ],
@@ -38,6 +39,11 @@ var app = new Vue({
 
         ],
         cart: 0,
+        onSale: true
+
+
+
+
 
     },
     methods: {
@@ -51,11 +57,33 @@ var app = new Vue({
             }
         },
         // hover over color updates color of product
-        updateProduct(variantImage) {
-            this.image = variantImage
+        updateProduct(index) {
+            this.selectedVariant=index
+            console.log(index)
 
         }
-    }
+        },
+        computed: {
+            title() {
+               return this.brand + ' ' + this.product
+            },
+            image() {
+                return this.variants[this.selectedVariant].variantImage
+            },
+            inStock(){
+                return this.variants[this.selectedVariant].variantQuantity 
+            },
+            sale(){
+                if(this.onSale){
+                    return this.brand + ' ' + this.product + ' is on sale!'
+                }
+                else{
+                    return this.brand + ' ' + this.product + ' is not on sale'
+                }
+                }
+            }
+    },
+       
 
-}
+
 )

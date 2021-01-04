@@ -92,6 +92,6 @@ body {
     cursor: pointer;
   }
 
-  .crossOut{
+  .outOfStock{
     text-decoration: line-through;
   }
