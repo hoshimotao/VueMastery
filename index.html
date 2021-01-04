@@ -1,53 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Product App</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-  </head>
-  <body>
-    <div class="nav-bar"></div>
 
-    <div id="app">
-      <div class="product">
-        <div class="product-image">
-          <a :href="image_link"><img :src="image" :alt="description" /></a>
-        </div>
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <title>Product App</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <div class="nav-bar"></div>
+
+  <div id="app">
+    <div class="product">
+      <div class="product-image">
+        <a :href="image_link"><img :src="image" :alt="description" /></a>
+      </div>
 
 
-        <div class="product-info">
-            <h1>{{ product }}</h1>
-            <p v-if="inventory > 10"> In Stock </p>
-            <p v-else-if="inventory<=10 && inventory > 0"> Almost Sold Out </p>
-            <p v-else> Out Of Stock </p>
+      <div class="product-info">
+        <h1>{{ product }}</h1>
+        <p v-if="inventory > 10"> In Stock </p>
+        <p v-else-if="inventory<=10 && inventory > 0"> Almost Sold Out </p>
+        <p v-else> Out Of Stock </p>
 
-            <ul>
-              <li v-for="detail in details"> {{ detail }} </li>
-            </ul>
+        <ul>
+          <li v-for="detail in details"> {{ detail }} </li>
+        </ul>
 
-            <div v-for="variant in variants" :key="variant.variantId"> 
-              <p> {{ variant.variantColor }} </p>
-              <div v-for="size in sizes" :key="size.sizeId"> 
+        <div v-for="variant in variants" :key="variant.variantId" class="cursorHover">
+          <p @mouseover="updateProduct(variant.variantImage)"> {{ variant.variantColor }} </p>
+          <!-- <div v-for="size in sizes" :key="size.sizeId"> 
                 <ul> 
                   <li>
                     {{ size.size }} 
                   </li>
                 </ul>
-              </div>
-            </div>
-
-           
-
-           
-
-
-            <p><span v-show="onSale" style="color: red"> ON SALE! </span></p>
-
+              </div> -->
         </div>
+
+
+
+        <!-- BUTTON + LISTENER -->
+
+        <button @click="removeFromCart" style="background-color: red;"> Remove </button>
+        <button @click="addToCart"> Add to Cart </button>
+
+        <div class="cart">
+          <p> Cart({{cart}}) </p>
+        </div>
+
+
+
+
+
+
+        <!-- <p><span v-show="onSale" style="color: red"> ON SALE! </span></p> -->
+
       </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-    <script src="main.js"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+  <script src="main.js"></script>
+</body>
+
 </html>
