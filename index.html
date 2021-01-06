@@ -11,68 +11,9 @@
   <div class="nav-bar"></div>
 
   <div id="app">
-    <div class="product">
-      <div class="product-image">
-        <a :href="image_link"><img :src="image" :alt="description" /></a>
-      </div>
-
-
-
-      <!-- Product Title and Stock -->
-
-      <div class="product-info">
-
-
-
-
-
-
-        <p> {{ sale }} </p>
-
-        <h1>{{ title }}</h1>
-
-
-        <p v-if="inStock"> In Stock </p>
-        <p v-else :class="{outOfStock: !inStock }"> Out of Stock </p>
-        <ul>
-          <li v-for="detail in details"> {{ detail }} </li>
-        </ul>
-
-
-
-
-
-
-        <!-- Color Choice Boxes -->
-
-        <div v-for="(variant, index) in variants" :key="variant.variantId" class="color-box cursorHover"
-          :style="{ backgroundColor: variant.variantColor }" @mouseover="updateProduct(index)">
-
-
-
-
-        </div>
-
-
-
-        <!-- BUTTON + LISTENER -->
-
-        <button @click="removeFromCart" style="background-color: red;"> Remove </button>
-        <button @click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock }"> Add to Cart </button>
-
-        <div class="cart">
-          <p> Cart({{cart}}) </p>
-        </div>
-
-
-
-
-
-
-        <!-- <p><span v-show="onSale" style="color: red"> ON SALE! </span></p> -->
-
-      </div>
-    </div>
+    <product :premium="premium"></product>
+    
+    
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
