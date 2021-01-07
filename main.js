@@ -1,3 +1,25 @@
+
+// Product Review
+Vue.component("product-review", {
+  template: `
+  <input v-model="name">
+
+  `,
+  data(){
+    return {
+      name: null
+    }
+  }
+})
+
+
+
+
+
+
+
+
+
 Vue.component("productDetails", {
     props: {
       details: {
@@ -64,11 +86,11 @@ Vue.component("product", {
         <button @click="removeFromCart" style="background-color: red;"> Remove </button>
         <button @click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock }"> Add to Cart </button>
 
-        <div class="cart">
-          <p> Cart({{cart}}) </p>
-        </div>
+       
 
         <!-- <p><span v-show="onSale" style="color: red"> ON SALE! </span></p> -->
+
+        <product-review></product-review>
 
       </div>
     </div>
@@ -113,20 +135,21 @@ Vue.component("product", {
           size: "large",
         },
       ],
-      cart: 0,
+      
       onSale: true,
     };
   },
   // KEEP METHODS AND COMPUTATIONS SEPARATE!
   methods: {
+
+    
     // increase cart by one
     addToCart() {
-      this.cart += 1;
+      this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId)
+      console.log(this.variants[this.selectedVariant].variantId)
     },
     removeFromCart() {
-      if (this.cart != 0) {
-        this.cart -= 1;
-      }
+      this.$emit('remove-from-cart', this.variants[this.selectedVariant].variantId)
     },
     // hover over color updates color of product
     updateProduct(index) {
@@ -157,6 +180,7 @@ Vue.component("product", {
       }
       return "$2.99";
     },
+    
   },
 });
 
@@ -166,5 +190,17 @@ var app = new Vue({
   el: "#app",
   data: {
     premium: true,
+    cart: [],
   },
-});
+  methods: {
+  updateCart(id){
+      this.cart.push(id);
+  
+},
+  updateRemoveCart(id){
+    if(this.cart != 0) {
+    this.cart.pop(id)
+  }}
+
+  
+}});
